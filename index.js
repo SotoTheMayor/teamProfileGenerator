@@ -2,7 +2,7 @@ const inquirer = require('inquirer')
 const fs = require('fs')
 let final;
 
-function Employee(data) {
+function Employees(data) {
     this.name = data.name;
     this.id = data.id;
     this.email = data.email;
@@ -12,8 +12,8 @@ function Employee(data) {
 
 writeManager();
 
-function addStaff(data) {
-    console.log(`This is the tracker: ` + data.tracker)
+function addStaff() {
+
 inquirer.prompt([
     {
         type: `list`,
@@ -58,7 +58,8 @@ function writeManager() {
     ])
     .then((data) => {
         data.role = `Manager`;
-        final = Object.assign(new Employee(data), final);
+        final = {...final, [data.name]: data}
+        console.log(final)
         addStaff(final)
     })
 }
@@ -87,8 +88,9 @@ function writeEngineer() {
         },
     ])
     .then((data) => {
-        data.role = `Engineer`;
-        final = Object.assign(new Employee(data), final)
+        data.role = `Engineer`;        
+        final = {...final, [data.name]: data}
+        console.log(final)
         addStaff(final)
     })
 }
@@ -118,7 +120,8 @@ function writeIntern() {
     ])
     .then((data) => {
         data.role = `Intern`;
-        final = Object.assign(new Employee(data), final)
+        final = {...final, [data.name]: data}
+        console.log(final)
         addStaff(final)
     })
 }
