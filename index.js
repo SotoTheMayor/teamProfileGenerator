@@ -1,9 +1,19 @@
 const inquirer = require('inquirer')
 const fs = require('fs')
+let final;
+
+function Employee(data) {
+    this.name = data.name;
+    this.id = data.id;
+    this.email = data.email;
+    this.addInfo = data.addInfo;
+    this.role = data.role;
+}
 
 writeManager();
 
-function initialize(data) {
+function addStaff(data) {
+    console.log(`This is the tracker: ` + data.tracker)
 inquirer.prompt([
     {
         type: `list`,
@@ -14,15 +24,11 @@ inquirer.prompt([
 ])
 .then((data) => {
     if (data.addEmployee == `Engineer`) {
-        writeEngineer()
+        writeEngineer(data)
     } else if (data.addEmployee == `Intern`) {
-        writeIntern()
+        writeIntern(data);
     } else {
-
-    fs.writeFile(`./dist/index.html`, JSON.stringify(data, null, `\t`), (err) => {
-        err ? console.log(err) : console.log(`Success!`)
-    })
-    return;
+        createFile();
     }
 })
 }
@@ -31,27 +37,29 @@ function writeManager() {
     inquirer.prompt([
         {
             type: `input`,
-            name: `managerName`,
+            name: `name`,
             message: `What is the team manager's name?`,
         },
         {
             type: `input`,
-            name: `managerID`,
+            name: `id`,
             message: `What is the team manager's employee ID?`,
         },
         {
             type: `input`,
-            name: `managerEmail`,
+            name: `email`,
             message: `What is the team manager's email address?`,
         },
         {
             type: `input`,
-            name: `managerOffice`,
+            name: `addInfo`,
             message: `What is the team manager's office number?`,
         },
     ])
     .then((data) => {
-        initialize(data)
+        data.role = `Manager`;
+        final = Object.assign(new Employee(data), final);
+        addStaff(final)
     })
 }
 
@@ -59,27 +67,29 @@ function writeEngineer() {
     inquirer.prompt([
         {
             type: `input`,
-            name: `engineerName`,
+            name: `name`,
             message: `What is the engineer's name?`,
         },
         {
             type: `input`,
-            name: `engineerID`,
+            name: `id`,
             message: `What is the engineer's employee ID?`,
         },
         {
             type: `input`,
-            name: `engineerEmail`,
+            name: `email`,
             message: `What is the engineer's email address?`,
         },
         {
             type: `input`,
-            name: `engineerGit`,
+            name: `addInfo`,
             message: `What is the engineer's Github username?`,
         },
     ])
     .then((data) => {
-        initialize(data)
+        data.role = `Engineer`;
+        final = Object.assign(new Employee(data), final)
+        addStaff(final)
     })
 }
 
@@ -87,26 +97,35 @@ function writeIntern() {
     inquirer.prompt([
         {
             type: `input`,
-            name: `internName`,
+            name: `name`,
             message: `What is the intern's name?`,
         },
         {
             type: `input`,
-            name: `internID`,
+            name: `id`,
             message: `What is the intern's employee ID?`,
         },
         {
             type: `input`,
-            name: `internEmail`,
+            name: `email`,
             message: `What is the intern's email address?`,
         },
         {
             type: `input`,
-            name: `internSchool`,
+            name: `addInfo`,
             message: `Where does the intern attend school?`,
         },
     ])
     .then((data) => {
-        initialize(data)
+        data.role = `Intern`;
+        final = Object.assign(new Employee(data), final)
+        addStaff(final)
     })
+}
+
+function createFile() {
+    fs.writeFile(`./dist/index.html`, JSON.stringify(final, null, `\t`), (err) => {
+        err ? console.log(err) : console.log(`Success!`)
+    })
+    return;
 }
