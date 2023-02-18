@@ -1,40 +1,11 @@
 const inquirer = require('inquirer')
 const fs = require('fs')
+const buildPage = require(`./lib/buildPage`);
+
 let final;
 
-function Employees(data) {
-    this.name = data.name;
-    this.id = data.id;
-    this.email = data.email;
-    this.addInfo = data.addInfo;
-    this.role = data.role;
-}
-
-writeManager();
-
-function addStaff() {
-
-inquirer.prompt([
-    {
-        type: `list`,
-        name: `addEmployee`,
-        message: `Any other employees? Select from below:`,
-        choices: [`Engineer`, `Intern`, `No other employees`]
-    },
-])
-.then((data) => {
-    if (data.addEmployee == `Engineer`) {
-        writeEngineer(data)
-    } else if (data.addEmployee == `Intern`) {
-        writeIntern(data);
-    } else {
-        createFile();
-    }
-})
-}
-
-function writeManager() {
-    inquirer.prompt([
+const initialize = () => {
+    return inquirer.prompt([
         {
             type: `input`,
             name: `name`,
@@ -56,16 +27,37 @@ function writeManager() {
             message: `What is the team manager's office number?`,
         },
     ])
-    .then((data) => {
+    .then(data => {
         data.role = `Manager`;
         final = {...final, [data.name]: data}
-        console.log(final)
         addStaff(final)
+        return;
     })
 }
 
-function writeEngineer() {
-    inquirer.prompt([
+const addStaff = () => {
+return inquirer.prompt([
+    {
+        type: `list`,
+        name: `addEmployee`,
+        message: `Any other employees? Select from below:`,
+        choices: [`Engineer`, `Intern`, `No other employees`]
+    },
+])
+.then(data => {
+    console.log(final)
+    if (data.addEmployee == `Engineer`) {
+        writeEngineer(data)
+    } else if (data.addEmployee == `Intern`) {
+        writeIntern(data)
+    } else {
+        return;
+    }
+})
+}
+
+const writeEngineer = () => {
+    return inquirer.prompt([
         {
             type: `input`,
             name: `name`,
@@ -87,16 +79,16 @@ function writeEngineer() {
             message: `What is the engineer's Github username?`,
         },
     ])
-    .then((data) => {
+    .then(data => {
         data.role = `Engineer`;        
         final = {...final, [data.name]: data}
-        console.log(final)
         addStaff(final)
+        return;
     })
 }
 
-function writeIntern() {
-    inquirer.prompt([
+const writeIntern = () => {
+    return inquirer.prompt([
         {
             type: `input`,
             name: `name`,
@@ -118,17 +110,25 @@ function writeIntern() {
             message: `Where does the intern attend school?`,
         },
     ])
-    .then((data) => {
+    .then(data => {
         data.role = `Intern`;
         final = {...final, [data.name]: data}
-        console.log(final)
         addStaff(final)
+        return;
     })
 }
 
-function createFile() {
-    fs.writeFile(`./dist/index.html`, JSON.stringify(final, null, `\t`), (err) => {
+const createFile = final => {
+    fs.writeFile(`./dist/index.html`, final, (err) => {
         err ? console.log(err) : console.log(`Success!`)
     })
     return;
 }
+
+initialize()
+.then(data =>  {
+    return buildPage(data);
+})
+.then(data =>  {
+    return createFile(data);
+})
