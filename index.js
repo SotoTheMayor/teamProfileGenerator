@@ -2,9 +2,6 @@ const inquirer = require('inquirer')
 const fs = require('fs')
 const buildPage = require(`./lib/buildPage.js`);
 
-const test = require(`./test`);
-
-
 let final;
 
 const initialize = () => {
