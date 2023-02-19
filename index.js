@@ -1,6 +1,6 @@
 const inquirer = require('inquirer')
 const fs = require('fs')
-const buildPage = require(`./lib/buildPage`);
+const buildPage = require(`./lib/buildPage.js`);
 
 const test = require(`./test`);
 
@@ -39,7 +39,6 @@ const initialize = () => {
 }
 
 const addStaff = () => {
-    console.log(`=======================================================`)
 return inquirer.prompt([
     {
         type: `list`,
@@ -49,16 +48,15 @@ return inquirer.prompt([
     },
 ])
 .then(data => {
-    console.log(final)
     if (data.addEmployee == `Engineer`) {
         writeEngineer(data)
     } else if (data.addEmployee == `Intern`) {
         writeIntern(data)
     } else {
         exitFunc(final)
-        console.log(final);
+        .then(final => {
         createFile(final);
-        
+    })
     }
 })
 }
@@ -125,8 +123,8 @@ const writeIntern = () => {
     })
 }
 
-const createFile = () => {
-    fs.writeFile(`./dist/index.html`, JSON.stringify(final), (err) => {
+const createFile = final => {
+    fs.writeFile(`./dist/index.html`, final, (err) => {
         err ? console.log(err) : console.log(`Success!`)
     })
     return;
@@ -135,6 +133,8 @@ const createFile = () => {
 initialize()
 
 const exitFunc = final => {
-    return buildPage(final)
+    return new Promise ((resolve, reject) => {
+        resolve(buildPage(final))
+    })
 }
 
