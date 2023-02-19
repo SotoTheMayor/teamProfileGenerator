@@ -1,14 +1,24 @@
-const buildPage = data => {
-    const staff = data;
+const test = () => {
+    const staff = {
+        dad: {name: `dad`, role: `parent`, id: `1`, email: `dad@gmail.com`, addInfo: `cool`},
+        caden: {name: `caden`, role: `child`, id: `3`, email: `caden@gmail.com`, addInfo: `awesome`}
+    };
+
+
+// for (const employee of Object.values(staff)) {
+//     console.log(employee)
+// }
+
     class Build {
-        constructor(employee) {
-        this.name = employee.name,
-        this.role = employee.role,
-        this.id = employee.id,
-        this.email = employee.email,
-        this.addInfo = employee.addInfo
+        constructor(data) {
+        this.name = data.name,
+        this.role = data.role,
+        this.id = data.id,
+        this.email = data.email,
+        this.addInfo = data.addInfo
         }
     }
+
     let html = `<!DOCTYPE html>
     <html lang='en'>
     <head>
@@ -26,9 +36,9 @@ const buildPage = data => {
         <main class="container row justify-content-md-center">`
 
         for (const employee of Object.values(staff)) {
-
-            const x = new Build(employee);
-            console.log(`--------------------------------------------`)
+            // console.log(`========================  ` + employee)
+            const x = new Build(employee)
+            // console.log(x)
             html += `<div class='card col-2 m-4 border-0'>
             <div class='card-top bg-primary text-white'>
                 <p>${x.name}</p>
@@ -40,14 +50,18 @@ const buildPage = data => {
                 <div class='bg-white ml-3 mr-3 mt-1 mb-1'>${x.addInfo}</div>
             </div>
         </div>`
+
         }
 
-    html += `</main>
+    html += `
+    </main>
     </body>
     </html>
         `
 
+console.log(html)
+
         return html;
 }
 
-module.exports = buildPage;
+module.exports = test;

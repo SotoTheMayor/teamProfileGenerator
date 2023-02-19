@@ -2,6 +2,9 @@ const inquirer = require('inquirer')
 const fs = require('fs')
 const buildPage = require(`./lib/buildPage`);
 
+const test = require(`./test`);
+
+
 let final;
 
 const initialize = () => {
@@ -36,6 +39,7 @@ const initialize = () => {
 }
 
 const addStaff = () => {
+    console.log(`=======================================================`)
 return inquirer.prompt([
     {
         type: `list`,
@@ -51,7 +55,7 @@ return inquirer.prompt([
     } else if (data.addEmployee == `Intern`) {
         writeIntern(data)
     } else {
-        return;
+        exitFunc();
     }
 })
 }
@@ -118,17 +122,21 @@ const writeIntern = () => {
     })
 }
 
-const createFile = final => {
-    fs.writeFile(`./dist/index.html`, final, (err) => {
+const createFile = html => {
+    fs.writeFile(`./dist/index.html`, html, (err) => {
         err ? console.log(err) : console.log(`Success!`)
     })
     return;
 }
 
 initialize()
-.then(data =>  {
-    return buildPage(data);
-})
-.then(data =>  {
-    return createFile(data);
-})
+
+exitFunc()
+.then(console.log(`++++++++++++++++++++++++++++++++++++++++++++++++++++++`))
+// .then(data =>  {
+//     return buildPage(data);
+//     return test(data)
+// })
+// .then(html =>  {
+//     return createFile(html);
+// })
