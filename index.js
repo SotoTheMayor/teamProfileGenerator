@@ -55,7 +55,10 @@ return inquirer.prompt([
     } else if (data.addEmployee == `Intern`) {
         writeIntern(data)
     } else {
-        exitFunc();
+        exitFunc(final)
+        console.log(final);
+        createFile(final);
+        
     }
 })
 }
@@ -122,8 +125,8 @@ const writeIntern = () => {
     })
 }
 
-const createFile = html => {
-    fs.writeFile(`./dist/index.html`, html, (err) => {
+const createFile = () => {
+    fs.writeFile(`./dist/index.html`, JSON.stringify(final), (err) => {
         err ? console.log(err) : console.log(`Success!`)
     })
     return;
@@ -131,12 +134,7 @@ const createFile = html => {
 
 initialize()
 
-exitFunc()
-.then(console.log(`++++++++++++++++++++++++++++++++++++++++++++++++++++++`))
-// .then(data =>  {
-//     return buildPage(data);
-//     return test(data)
-// })
-// .then(html =>  {
-//     return createFile(html);
-// })
+const exitFunc = final => {
+    return buildPage(final)
+}
+
