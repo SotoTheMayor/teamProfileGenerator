@@ -1,18 +1,27 @@
-// const buildPage = require(`../lib/buildPage.js`);
-const engineer = require(`../index.js`);
+
+const Employee = require(`../lib/employee.js`);
+
 // const { describe } = require("test");
 
-describe('engineer', () => {
+describe('Employee', () => {
+    describe('Initialization', () => {
+        //Positive test
     it('should accept input on name and return the information in an object', () => {
-        expect(engineer()).toBe(``);
+        //Arrange
+        const pass = `Jason`;
+        //Act
+        const result = new Employee().getName(pass)
+        //Assert
+        expect(result).toBe(`Jason`);
     })
     it('should accept input on employee ID and return the information in an object', () => {
-        expect(engineer()).toBe(``);
+        expect(employee()).toBe(``);
     })
     it('should accept input on email and return the information in an object', () => {
-        expect(engineer()).toBe(``);
+        expect(employee()).toBe(``);
     })
     it('should accept input on office number and return the information in an object', () => {
-        expect(engineer()).toBe(``);
+        expect(employee()).toBe(``);
     })
+})
 })

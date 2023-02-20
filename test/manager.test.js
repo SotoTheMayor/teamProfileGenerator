@@ -1,18 +1,25 @@
-// const buildPage = require(`../lib/buildPage.js`);
-const intern = require(`../index.js`);
+const Manager = require(`../lib/manager.js`);
 // const { describe } = require("test");
 
-describe('intern', () => {
+describe('manager', () => {
+    describe('Initialization', () => {
+        //Positive test
     it('should accept input on name and return the information in an object', () => {
-        expect(intern()).toBe(``);
+        //Arrange
+        const pass = `Jason`;
+        //Act
+        const result = new Manager().getName(pass)
+        //Assert
+        expect(result).toBe(`Jason`);
     })
     it('should accept input on employee ID and return the information in an object', () => {
-        expect(intern()).toBe(``);
+        expect(manager()).toBe(``);
     })
     it('should accept input on email and return the information in an object', () => {
-        expect(intern()).toBe(``);
+        expect(manager()).toBe(``);
     })
     it('should accept input on office number and return the information in an object', () => {
-        expect(intern()).toBe(``);
+        expect(manager()).toBe(``);
     })
+})
 })
