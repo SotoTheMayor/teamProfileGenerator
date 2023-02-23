@@ -1,9 +1,11 @@
+//inquirer and fs are needed for prompts and file creation, buildPage is the html compiler
 const inquirer = require('inquirer')
 const fs = require('fs')
 const buildPage = require(`./lib/buildPage.js`);
 
 let final;
 
+//initial function when index.js is launched in node
 const initialize = () => {
     return inquirer.prompt([
         {
@@ -35,6 +37,7 @@ const initialize = () => {
     })
 }
 
+//function for the prompt that asks the user if they want to add an engineer or intern to the team
 const addStaff = () => {
 return inquirer.prompt([
     {
@@ -58,6 +61,7 @@ return inquirer.prompt([
 })
 }
 
+//called if an engineer is chosen from the addStaff function
 const writeEngineer = () => {
     return inquirer.prompt([
         {
@@ -89,6 +93,7 @@ const writeEngineer = () => {
     })
 }
 
+//called if an intern is selected from the addStaff function
 const writeIntern = () => {
     return inquirer.prompt([
         {
@@ -120,6 +125,7 @@ const writeIntern = () => {
     })
 }
 
+//writes the final index.html received from buildPage.js
 const createFile = final => {
     fs.writeFile(`./dist/index.html`, final, (err) => {
         err ? console.log(err) : console.log(`Success!`)
@@ -127,8 +133,10 @@ const createFile = final => {
     return;
 }
 
+//called when `node index.js` is typed in the console
 initialize()
 
+//called when `no other employee` is selected from addStaff function
 const exitFunc = final => {
     return new Promise ((resolve, reject) => {
         resolve(buildPage(final))
