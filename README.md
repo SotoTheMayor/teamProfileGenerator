@@ -24,7 +24,8 @@ User will need to initialize npm from their console and the application's root f
 ## Usage
 The project is meant to generate a team roster with roles for a manager, engineer, and intern.  The website can be used with no need to create any of the html by the user
 
-![Gif of project in use](./lib/teamProfileGeneratorGif.gif)
+![Video of project in use](./walkthrough/teamProfile.mp4)
+[Google Drive Walthrough Video Link](https://drive.google.com/file/d/1PNAGJTgkPvwzqUT--0oGrjTD0KwlCuMi/view)
 
 ## License
 
